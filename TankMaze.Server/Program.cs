@@ -3,11 +3,8 @@ using TankMaze.Server.Network;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Singleton Servisler
-builder.Services.AddSingleton<Simulation>();
+builder.Services.AddSingleton<GameRoomManager>();
 builder.Services.AddSingleton<SocketHandler>();
-
-// Arka Plan Oyun Döngüsü Servisi
 builder.Services.AddHostedService<GameLoopService>();
 
 var app = builder.Build();

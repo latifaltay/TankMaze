@@ -2,33 +2,43 @@ import { NetworkManager } from '../network/NetworkManager';
 
 export class InputHandler {
     private keys: number = 0;
+    private lastFireMs = 0;
+    private static readonly FIRE_COOLDOWN_MS = 750;
 
     constructor(
         private network: NetworkManager,
         private getMyId: () => number,
+        private getIsActive: () => boolean,
         private players: Map<number, { targetX: number; targetY: number; x: number; y: number }>,
         private isColliding: (x: number, y: number) => boolean
     ) {
         window.addEventListener('keydown', (e) => {
+            if (!this.getIsActive()) return;
             if (e.key === ' ') {
                 e.preventDefault();
+                const now = performance.now();
+                if (now - this.lastFireMs < InputHandler.FIRE_COOLDOWN_MS) return;
+                this.lastFireMs = now;
                 this.network.send(new Uint8Array([0x05]));
                 return;
             }
             this.handleKey(e, true);
         });
-        window.addEventListener('keyup', (e) => this.handleKey(e, false));
+        window.addEventListener('keyup', (e) => {
+            if (!this.getIsActive()) return;
+            this.handleKey(e, false);
+        });
         window.addEventListener('blur', () => this.clearKeys());
 
         setInterval(() => {
-            if (this.keys !== 0) this.sendInput();
+            if (this.getIsActive() && this.keys !== 0) this.sendInput();
         }, 50);
     }
 
-    private clearKeys() {
+    clearKeys() {
         if (this.keys === 0) return;
         this.keys = 0;
-        this.sendInput();
+        if (this.getIsActive()) this.sendInput();
     }
 
     private handleKey(e: KeyboardEvent, isDown: boolean) {

@@ -26,3 +26,4 @@ C:\Users\LA\Desktop\Tankmaze\TankMaze_V1.1\TankMaze.Server\obj\Debug\net10.0\ref
 C:\Users\LA\Desktop\Tankmaze\TankMaze_V1.1\TankMaze.Server\obj\Debug\net10.0\TankMaze.Server.pdb
 C:\Users\LA\Desktop\Tankmaze\TankMaze_V1.1\TankMaze.Server\obj\Debug\net10.0\TankMaze.Server.genruntimeconfig.cache
 C:\Users\LA\Desktop\Tankmaze\TankMaze_V1.1\TankMaze.Server\obj\Debug\net10.0\ref\TankMaze.Server.dll
+C:\Users\LA\Desktop\Tankmaze\TankMaze_V1.1\TankMaze.Server\obj\Debug\net10.0\TankMaze.Server.sourcelink.json
