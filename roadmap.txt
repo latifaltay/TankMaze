@@ -1,0 +1,46 @@
+🚀 TankMaze Roadmap & Vision
+Bu doküman, TankMaze projesinin gelişim aşamalarını; teknik stabilizasyon, temel oyun mekanikleri, görsel iyileştirmeler ve sosyal özellikler başlıkları altında öncelik sırasına göre listeler.
+
+1. Aşama: Stabilizasyon ve Temel Fizik (Öncelikli)
+Bug Fix (HP Loss): Canın sebepsiz azalması sorununun çözümü (mermi-tank başlangıç koordinat optimizasyonu).
+
+Çarpışma Düzeltmesi: Tank gövdesi ve namlusunun duvarların içine girmesini engelleyen "Precise Hitbox" güncellemesi.
+
+Networking: Akıcı bir deneyim için Client-side Prediction ve Server Reconciliation tekniklerinin entegrasyonu.
+
+Spawn Logic: Tüm oyuncuların aynı noktada doğması yerine, harita genelinde "Safe-Spawn" algoritması.
+
+2. Aşama: Oyun Mekanikleri ve Yetenekler
+Power-up Dropları: Haritaya belirli aralıklarla düşen; Hız Artışı, Çoklu Mermi ve Zırh modifikasyonları.
+
+Çalı (Stealth) Mekaniği: Sunucu taraflı görüş yönetimi (Fog of War). Çalılardaki tankların gizlenmesi ve sadece yakınındaki düşmanlar tarafından görülebilmesi.
+
+Gelişmiş Mermi: Seken mermi (Ricochet) özelliği ve duvar çarpışma mantığının güncellenmesi.
+
+3. Aşama: Sosyal Özellikler ve Kullanıcı Deneyimi
+Lobi ve Renk Seçimi: Oyun öncesi tank rengi seçimi ve lobi arayüzü.
+
+Party & Takım Modları: Arkadaşlarla Join with Friend özelliği ve takım bazlı oyun modları.
+
+Oyun Modları: 1vs1 (Küçük harita) ve Capture the Trophy (Bayrak kapmaca/Kupa koruma) gibi varyasyonlar.
+
+Mini-Map: Stratejik yönetimi kolaylaştıran sağ alt köşede canlı mini-harita.
+
+4. Aşama: Görsel ve İçerik İyileştirmeleri
+Varlık (Asset) Güncellemesi: Minecraft estetiğine uygun "kırık taş" (kırılamayan) ve "ahşap doku" (kırılabilir) duvar tasarımları. Çalıların estetikleştirilmesi.
+
+UI/UX: Simsiyah arkaplan yerine temaya uygun atmosferik bir arkaplan tasarımı.
+
+Performans: Görsel varlıkların (sprites) optimizasyonu.
+
+5. Aşama: Uzun Vadeli Ekosistem (Monetization & Retention)
+Giriş Sistemi: Google/Facebook entegrasyonu ile kullanıcı hesapları.
+
+Meta-Oyun: Günlük hediyeler (daily gifts), kişiselleştirilebilir skinler ve ilerlemeli başarımlar.
+
+Rekabet: Haftalık/Aylık küresel liderlik tabloları (Leaderboard).
+
+Spectate: Rekabeti canlı izleme modu.
+
+💡 Teknik Not (Mimari Uyarı)
+Proje bir .io oyunundan "Competitive Browser Arena"ya evrildiği için; ilerleyen aşamalarda monolitik yapıdan Matchmaking (Oda tabanlı) sunucu yapısına geçiş zorunluluk arz edecektir.

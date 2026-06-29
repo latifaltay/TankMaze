@@ -1,0 +1,104 @@
+2. "Power-up" Dropları (Rastgele Yetenekler)
+Can toplama sistemin var, bunu "silah modifikasyonu" ile çeşitlendirelim.
+
+Mekanik: Haritaya belirli aralıklarla rastgele "Drop" noktaları koyalım. Örneğin:
+
+Hız Artışı: 10 saniyeliğine hareket hızı +%30.
+
+Çoklu Mermi: 10 saniyeliğine 2'li atış yapma.
+
+Zırh: 10 saniyeliğine gelen hasarı yarıya indirme.
+
+seken mermi özelliği: duvardan sekip l şeklinde gidebilirduvarların dönüş noktalarına belki üçgen koyulup bir şey yapılabilir
+
+Fayda: Haritanın sadece merkezinde değil, uç köşelerinde de aksiyon olmasını sağlar.
+
+bu özellikleri ekleyelim
+
+
+oyuncular aynı yerde doğmasın haritanın random yerlerinde doğsunlar
+
+yeşil blokların altına giren tankları diğer tanklar göremesin sadece kendileri kendilerini görebilsinler ama birden fazla tank aynı yeşil bloğun altındaysa birbirlerini görebilsinler
+
+tank'ın namlusu ve kenarları duvarların içine girebiliyor bu olmasın
+
+tank biraz daha tanka benzesin yeşil bloklar da çalılara benzesin dümdüz yeşil blok olmasın 
+
+kırılabilen duvarlar ahşap odun görüntüsünde olsun kırılamayan duvarlar ise minecraft'taki kırık taş şeklinde olsun ona benzesin düm düz renkleri farklı bloklar olmasın oyuna benzesin
+
+oyunzu oyuna girmeden önce tankın rengini seçebilsin
+
+
+2. "Mini-Map" (Küçük Harita)
+
+
+
+
+haritada kimse yokken yani tank kimseyle savaşmıyorken tankın canı çok çok az azalıyor nedenini bulmak gerekiyor
+
+party mode & join with friend gibi özellikler eklenecek 
+
+
+arkadaşla takım olma gibi özellik eklenebilir
+
+1 vs 1 gibi bir özellik eklenebilir daha küçük bi mapte
+
+
+
+ if(oyun.tutarsa(oyun,oynanırsa) == true) {ilerde register gelirse login with google facebook vs daily gifts (skin vs olabilir), daily chest, leaderboard haftanın, ayın, yılın vs vs eklenecek}
+
+
+arkaplan daha güzel bişeye dönüşecek simsiyah olmayacak, 
+
+
+belki map'in ortasında bi tane kupa olur onu koruyan takım saldıran takım gibi oyun modları üretilebilir
+
+
+
+
+
+Patron, notlarını inceledim. Objektif ve bir yazılım mimarı gözüyle söylüyorum: Projen "basic" bir .io oyunundan çıkıp, ciddi bir "Multiplayer Arena" oyununa evriliyor. Bu çok iyi bir şey, ancak "agar.io" gibi basit kalması gereken bir mimariyi çok karmaşıklaştırarak teknik borç (technical debt) oluşturma riskin var.
+
+İşte notlarına dair objektif değerlendirmem:
+
+1. Oyunun Kimliği ve Ölçeklenebilirlik
+Eklediğin özellikler (Party mode, 1v1, Takım modları, Rank sistemi, Login/Register) projeyi "kendi kendine yeten bir ekosistem" yapıyor. Bu harika, ancak reklam geliri elde etmek istiyorsan şunlara dikkat et:
+
+Server Cost: Bu kadar çok özellik (Fog of war, sürekli güncellenen durumlar, gerçek zamanlı çarpışmalar) sunucunu yoracaktır. Tek sunucu (monolitik) yapından "Room-based" veya "Matchmaking" mimarisine geçmen gerekecek.
+
+Basic vs Complex: Projenin "basic" olması değil, "akıcı" olması önemli. Eğer bu özellikleri eklerken oyun kasarsa (latency artarsa), kullanıcı 5. saniyede çıkar.
+
+2. Notlarına Ekleyeceğim (Ve İhmal Edilmemesi Gereken) Şeyler
+Şunları mutlaka listene ekle:
+
+Anti-Cheat (Hile Koruması): Multiplayer oyunlarda, özellikle "Fog of War" (görünmezlik) eklediğinde, oyuncular istemci taraflı (client-side) hileler yapıp görünmez olanları görmeye çalışacaktır. Tüm kritik kararları (kim kimi görüyor, kimin canı kaç) kesinlikle SERVER tarafında yönetmelisin. İstemci sadece sunucunun "izin verdiği" kadarını bilmeli.
+
+Network Interpolation: Tank hareketleri şu an biraz "ışınlanıyor" gibi olabilir. Oyuncuların birbirini daha akıcı görmesi için "Client-side prediction ve Server reconciliation" tekniklerini derinleştirmen gerekecek.
+
+Asset Optimization: Minecraft tipi taş veya ahşap görüntüleri eklediğinde (resim dosyaları), oyunun ilk yüklenme hızı (load time) artacak. Bunları optimize etmen lazım.
+
+3. Bu Özellikler Oyunu "Agar.io"dan Çıkartır mı?
+Evet, bu oyun artık bir "Competitive Browser Arena" oldu.
+
+Tavsiyem: Oyun modlarını (1v1, Team, FFA) birer "Oda" (Room) olarak tasarla. Giriş ekranında renk seçimi, lobi sistemi gibi "hizmetler" oyunun kalitesini artırır ama oyunun merkezinde o akıcı çarpışma hissi kalmalı.
+
+Eklemek İstediğim "Kritik" Bir Özellik:
+Replay/Spectate Mode: Eğer "oyun tutarsa" diyorsan, insanların birbirini izleyebileceği bir "Spectate" modu eklersen, o oyun içerideki rekabeti körükler ve oyuncuların oyunda kalma süresini ciddi artırır.
+
+O "Can Azalma" Sorunu (Bug Avı)
+"Tank kimseyle savaşmıyorken canı az azalıyor" demiştin. Bunun sebebi muhtemelen Simulation.cs içerisindeki Update() döngüsünde Floating-point hatası veya kendi merminin sana çarpması olabilir.
+
+Teori: Mermiyi ateşlediğin anda mermi senin koordinatında doğuyor. Eğer mermi hızıyla tankın hızı aynı "tick" içinde çakışırsa, mermi kendi sahibine hasar veriyor olabilir.
+
+Çözüm: Fire metodunda merminin başlangıç koordinatını tankın merkezinden TankSize + 5 birim ötede (namlu ucunda) başlatmalısın.
+
+Son Karar
+Bu notlar, bu oyunu bir "eğlence projesi" olmaktan çıkartıp "gelir getirici bir ürün" yapma potansiyeline taşıyor.
+
+Nasıl ilerleyelim?
+
+Stabilizasyon: Önce o "can azalma" bug'ını halledelim. (Bu en büyük güven kırıcıdır).
+
+Mimari: Ardından "Renk seçimi ve Lobi" sistemini kuralım.
+
+Grafik/Asset: En son ahşap/taş dokularını (Sprite) ekleyelim.
